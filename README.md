@@ -79,6 +79,87 @@ or find better way to respond to user input**
 
 -   **Reminder to self, remove PSD files from assets when free**
 
+## 12/07/23
+
+Instead of implementing a new state of a jump without horizontal movement I have
+allowed the player to move during jump and fall instead to compensate
+
+For the attack I force the player to follow threough the animation rather than
+allowing cancellation during any frame to disallow spamming attacks, since I
+dont have sprite annimations for running attacks for now I will only allow
+attacks in idle
+
+After finding out my left animations are playing in reverse due to me mirroring
+the images and the frameX going from left to right I have tried to rectify it
+using a cloned object with the property subtracting frames instead of increasing
+but having no success since object properties are passed by reference it keeps
+chaning, to solve this I have made two new properties this.leftSide and
+this.frameXLeft starting the animation from the right side
+
+The solution above has changed something in my code making it less responsive in
+movement. I think the best solution would be to photoshop the original images
+and put them in the correct order for left animations going from left to right
+as all others have but that would take a lot of time so this workaround will
+have to do
+
+The jump attacks arent what I expected so I will not implement them into the
+game instead the user can do a normal attack mid air but the animation is not
+smooth
+
+For enemies right now I will spawn one and make sure hitboxes work with the
+player and ememy. When I make progress I can add more complex enemies and
+patterns and attacks.
+
+I have implemented enemies and hitboxes however my character is quite small, I
+havent worked out the maths for scaling my character so I would would like to
+try scaling the images with an editor but that again is a luxury
+
+**Scale sprites/game to wanted sizes**
+
+Since the game is not as responsive as I would like I added in ways to regain
+lives to make it a bit more forgiving this is done by having a scores in
+multiples of 10
+
+I need to figure out a way to get enemies to spawn on different sides too so in
+the future when I have platforms I can use them
+
+Ive changed to spawning of ghosts for when the player reaches a certain score
+this would increase difficulty, ideally I would give the player another reward
+such as another attack for going higher but I need to find a better sprite sheet
+and if I had more enemies I could keep increasing enemy types and change spawn
+chances
+
+1. ~~Implement jump without horizontal movement~~
+2. ~~Attacks~~
+3. ~~Hitbox~~
+4. ~~Single Enemy~~
+5. Background
+6. Collision blocks
+7. ~~Collision~~
+8. Platform Jumping
+9. Camera Panning
+10. ~~Enemy Spawning~~
+11. Enemy Attacks
+12. Difficulty / Waves
+13. ~~Health~~
+14. Buffs
+15. Game Over conditions
+
+Ive managed to cross off quite a bit of my todo list however it still feels like
+I am so far away from my goal I think I will make this an MVP rather than what I
+had envisioned
+
+For tomorrow
+
+1. Enemy projectiles
+2. Different player sprite - current too small
+3. Background
+4. Platforms
+5. Difficulty
+6. Different Spawns
+7. Display difficulty level on screen by amount of new enemies
+8. Win/Lose conditions
+
 ## Future work
 
 ## Things to improve

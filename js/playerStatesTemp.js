@@ -1,3 +1,5 @@
+// USE FOR NEW SPRITES CURRENTLY TEMP FILE
+
 // All possible states
 const states = {
 	IDLE_RIGHT: 0,

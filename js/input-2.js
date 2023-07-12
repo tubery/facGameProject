@@ -34,7 +34,7 @@ export default class InputHandler {
 				case "ArrowDown":
 					this.lastKey = "RELEASE down";
 					break;
-				case "ArrowSpace":
+				case " ":
 					this.lastKey = "RELEASE space";
 					break;
 			}
