@@ -21,6 +21,14 @@ the custom animate function
 
 **11/07/23**
 
+### Summary of today
+
+-   Acquired assets
+-   Code has more comments than usual as Im completely new to canvas
+-   Sprite movement partially done
+-   Problem with left animations
+-   Unhappy with controls but will have to do
+
 5 Days until the deadline I have spent the last four learning how to use JS
 canvas I am not sure if I can make the deadline but I will give it the best I
 can as I know I have the drive and skills
@@ -50,9 +58,6 @@ animation frames on jumping right but not left for some reason, I think its due
 to the mirrored image the frame is starting from the last frame since it is now
 at the beginning
 
-**Future work: Reverse frames going from right to left instead of default left
-to right: makes smoother animation but not important now**
-
 Not as responsive as my first implementation but it will have to do for now Ive
 spent too much time tuning this so I will move on
 
@@ -80,6 +85,22 @@ or find better way to respond to user input**
 -   **Reminder to self, remove PSD files from assets when free**
 
 ## 12/07/23
+
+### Summary of today
+
+-   Compensate responsiveness with more movement options
+-   Player has to let animation play when commiting attack
+-   Two new properties to compensate for left animations from mirror sprite
+    sheet
+-   Controls still not as wanted
+-   Enemies successfly spawned one
+-   Sprite sheet for jump attacks not working well with my jumps
+-   Small character sprite compared to enemies, not enough skill / time to scale
+    in image editor
+-   Allow player to regain lives via killing multiples of 10 enemies
+-   Ghosts spawned at top but havent figured out how to spawn left to right
+-   As player kills more enemies the game gets harder by adding different types
+    of enemies
 
 Instead of implementing a new state of a jump without horizontal movement I have
 allowed the player to move during jump and fall instead to compensate
