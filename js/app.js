@@ -26,7 +26,7 @@ window.addEventListener("load", () => {
 			this.background = document.getElementById("background");
 			// Player
 			this.player = new Player(this);
-			this.input = new InputHandler();
+			this.input = new InputHandler(this);
 			this.player.currentState = this.player.states[0];
 			this.player.currentState.enter();
 			// Enemies
@@ -39,9 +39,20 @@ window.addEventListener("load", () => {
 			this.fontColor = "black";
 			this.lives = 3;
 			this.floatingMessages = [];
+			this.difficulty = 1;
+			// Collision animations
+			this.collisions = [];
+			// GameOver
+			this.gameOver = false;
+			this.winningScore = 30;
 		}
 		// Updating drawn items
 		update(deltaTime) {
+			if (this.score === 10) {
+				this.difficulty = 2;
+			} else if (this.score < 10) {
+				this.difficulty = 1;
+			}
 			// Enemeis
 			if (this.enemyTimer > this.enemyInterval) {
 				this.addEnemy();
@@ -50,23 +61,38 @@ window.addEventListener("load", () => {
 				this.enemyTimer += deltaTime;
 			}
 			this.enemies.forEach((enemy) => enemy.update(deltaTime));
-			this.enemies = this.enemies.filter(
-				(enemy) => !enemy.markedForDeletion
-			); // remove enemies
+			// Collision
+			this.collisions.forEach((object) => {
+				object.update(deltaTime);
+			});
 			// Player
 			this.player.update(this.input.lastKey, deltaTime);
+
+			// remove enemies
+			this.enemies = this.enemies.filter(
+				(enemy) => !enemy.markedForDeletion
+			);
 		}
 		// Using this method we will draw all things and only use one call in the animate function
 		draw(context) {
 			this.enemies.forEach((enemy) => enemy.draw(context));
+			this.collisions.forEach((collision) => collision.draw(context));
 			this.player.draw(context);
 			this.ui.draw(context);
 		}
 		addEnemy() {
 			this.enemies.push(new FireSkull(this));
-			if (this.score > 5) {
+			if (this.score > 10) {
 				this.enemies.push(new Ghost(this));
 			}
+		}
+		restart() {
+			this.player = new Player(this);
+			this.enemies = [];
+			this.score = 0;
+			this.gameOver = false;
+			this.lives = 3;
+			animate(0);
 		}
 	}
 
@@ -85,7 +111,9 @@ window.addEventListener("load", () => {
 		game.draw(ctx);
 
 		// Call loop
-		requestAnimationFrame(animate);
+		if (!game.gameOver) {
+			requestAnimationFrame(animate);
+		}
 	}
 
 	animate(0);

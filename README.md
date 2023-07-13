@@ -21,7 +21,7 @@ the custom animate function
 
 **11/07/23**
 
-### Summary of today
+### Summary
 
 -   Acquired assets
 -   Code has more comments than usual as Im completely new to canvas
@@ -86,7 +86,7 @@ or find better way to respond to user input**
 
 ## 12/07/23
 
-### Summary of today
+### Summary
 
 -   Compensate responsiveness with more movement options
 -   Player has to let animation play when commiting attack
@@ -183,6 +183,15 @@ For tomorrow
 
 ## 13/07/23
 
+### Summary
+
+-   New Sprite hitbox too large
+-   Workaround on fall png not working
+-   3 hit combos implemented
+-   fixed hitboxes for player and attacks
+-   Added collision animations but not working properly on hits
+-   Win conditions, game over, restart
+
 Maanged to change the sprite to something bigger but now the character hitbox is
 too large I will have to fix it. The images for the falling animation were not
 working so I had to revert to a different way ot loading images using new Image
@@ -194,11 +203,17 @@ I have fin tuned the hitboxdes for the character and made it smaller than the
 size of the sprite, I have also changed the attack hitboxes to match close to
 the weapon instead of filling the size of the sprite image
 
--   New Sprite hitbox too large
--   Workaround on fall png not working
--   3 hit combos implemented
+Ive managed to get collisions working however the collisions work for the player
+and animates in the correct position but when the player hits the enemy the hit
+is in the wrong spot. My suspicion is on the hitbox changing when the player
+attacks meaning this could be solved mathmatically but I have been unable to
+solve it.
 
-*   fixed hitboxes for player and attacks
+Implemented win conditions, restart and game over state. I havent fully decided
+on the exact numbers but I can change them since they are in place now.
+
+The next thing is to increase the difficulties and enemies and a background and
+platforms.
 
 ## Future work
 

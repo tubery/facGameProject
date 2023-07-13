@@ -1,5 +1,6 @@
 export default class InputHandler {
-	constructor() {
+	constructor(game) {
+		this.game = game;
 		this.lastKey = "";
 		window.addEventListener("keydown", (e) => {
 			switch (e.key) {
@@ -17,6 +18,10 @@ export default class InputHandler {
 					break;
 				case " ":
 					this.lastKey = "PRESS space";
+				case "Enter":
+					if (this.game.gameOver) {
+						this.game.restart();
+					}
 					break;
 			}
 		});

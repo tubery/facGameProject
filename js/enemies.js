@@ -59,7 +59,6 @@ export class FireSkull extends Enemy {
 		this.maxFrame = 7;
 		this.image = enemyFireSkull;
 		this.angle = 0;
-		// this.va = Math.random() * 0.1 + 0.1; // Velocity angle
 		this.va = 0.05; // Velocity angle
 		this.curve = Math.random() * 4;
 	}

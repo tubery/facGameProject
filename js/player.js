@@ -1,3 +1,4 @@
+import CollisionAnimation from "./collisionAnimation.js";
 import {
 	AttackLeft,
 	AttackLeft2,
@@ -64,8 +65,7 @@ export default class Player {
 		this.currentState = this.states[0];
 		this.leftSide = false;
 		this.frameXLeft;
-		// Hitbox
-		// Default
+		// Hitbox default
 		this.hitboxWidth = 30;
 		this.hitboxHeight = 60;
 		this.hitboxX = this.x + this.width / 2 - this.hitboxWidth / 2;
@@ -131,13 +131,6 @@ export default class Player {
 		}
 	}
 	draw(context) {
-		// Hitbox
-		context.strokeRect(
-			this.hitboxX,
-			this.hitboxY,
-			this.hitboxWidth,
-			this.hitboxHeight
-		);
 		context.drawImage(
 			this.image, // Load image
 			this.frameX * this.width, // X position on png file
@@ -170,6 +163,15 @@ export default class Player {
 				enemy.y + enemy.height > this.hitboxY
 			) {
 				enemy.markedForDeletion = true;
+
+				// Collison effect
+				this.game.collisions.push(
+					new CollisionAnimation(
+						this.game,
+						enemy.x + enemy.width * 0.5,
+						enemy.y + enemy.height * 0.5
+					)
+				);
 				// Insert collision animation here
 				// Player in attack animation increase points
 				if (
@@ -189,6 +191,9 @@ export default class Player {
 					this.setState(10, 0);
 					this.game.lives--;
 					this.game.score -= 3;
+					if (this.game.lives <= 0) {
+						this.game.gameOver = true;
+					}
 				}
 			}
 		});
