@@ -140,7 +140,7 @@ export class JumpRight extends State {
 		if (this.game.player.onGround()) {
 			this.game.player.vy -= 30;
 		}
-		this.game.player.speed = this.game.player.maxSpeed * 0.5; // slow air movement
+		this.game.player.speed = this.game.player.maxSpeed * 0.6; // slow air movement
 	}
 	handleInput(input) {
 		// After peak of jump switch to falling right
@@ -169,7 +169,7 @@ export class JumpLeft extends State {
 		if (this.game.player.onGround()) {
 			this.game.player.vy -= 30;
 		}
-		this.game.player.speed = -this.game.player.maxSpeed * 0.5; // slow air movement
+		this.game.player.speed = -this.game.player.maxSpeed * 0.6; // slow air movement
 	}
 	handleInput(input) {
 		if (this.game.player.vy > 0) {

@@ -181,6 +181,25 @@ For tomorrow
 7. Display difficulty level on screen by amount of new enemies
 8. Win/Lose conditions
 
+## 13/07/23
+
+Maanged to change the sprite to something bigger but now the character hitbox is
+too large I will have to fix it. The images for the falling animation were not
+working so I had to revert to a different way ot loading images using new Image
+rather than using the DOM
+
+I also managed to get three hit combos to work with the character
+
+I have fin tuned the hitboxdes for the character and made it smaller than the
+size of the sprite, I have also changed the attack hitboxes to match close to
+the weapon instead of filling the size of the sprite image
+
+-   New Sprite hitbox too large
+-   Workaround on fall png not working
+-   3 hit combos implemented
+
+*   fixed hitboxes for player and attacks
+
 ## Future work
 
 ## Things to improve

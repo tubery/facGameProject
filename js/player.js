@@ -1,6 +1,10 @@
 import {
 	AttackLeft,
+	AttackLeft2,
+	AttackLeft3,
 	AttackRight,
+	AttackRight2,
+	AttackRight3,
 	FallingLeft,
 	FallingRight,
 	HurtLeft,
@@ -11,14 +15,14 @@ import {
 	JumpRight,
 	RunningLeft,
 	RunningRight,
-} from "./playerStates-2.js";
+} from "./playerStatesTemp.js";
 
 export default class Player {
 	constructor(game) {
 		this.game = game;
 		// Sprite width and height
-		this.width = 38;
-		this.height = 48;
+		this.width = 160;
+		this.height = 111;
 		// Player position
 		this.x = this.game.width / 2 - this.width;
 		this.y = this.game.height - this.height;
@@ -26,10 +30,11 @@ export default class Player {
 		this.vy = 0; // vy stands for velocity y axis
 		this.weight = 2.5;
 		// PNG sprite sheet / animations
-		this.image = playerIdle;
+		// this.image = playerIdle;
+		this.image = playerIdle2;
 		this.frameX = 0;
 		this.frameY = 0;
-		this.maxFrame;
+		this.maxFrame = 8;
 		// Animation speed settings
 		this.fps = 15;
 		this.frameInterval = 1000 / this.fps;
@@ -51,13 +56,31 @@ export default class Player {
 			new AttackLeft(this.game),
 			new HurtRight(this.game),
 			new HurtLeft(this.game),
+			new AttackRight2(this.game),
+			new AttackRight3(this.game),
+			new AttackLeft2(this.game),
+			new AttackLeft3(this.game),
 		];
 		this.currentState = this.states[0];
 		this.leftSide = false;
 		this.frameXLeft;
+		// Hitbox
+		// Default
+		this.hitboxWidth = 30;
+		this.hitboxHeight = 60;
+		this.hitboxX = this.x + this.width / 2 - this.hitboxWidth / 2;
+		this.hitboxY = this.y + this.height / 2 - this.hitboxHeight / 6;
+	}
+	// Change hitbox for attacks
+	updateHitbox() {
+		this.hitboxWidth = 30;
+		this.hitboxHeight = 60;
+		this.hitboxX = this.x + this.width / 2 - this.hitboxWidth / 2;
+		this.hitboxY = this.y + this.height / 2 - this.hitboxHeight / 6;
 	}
 	update(input, deltaTime) {
 		this.checkCollision();
+		this.updateHitbox();
 
 		// console.log(input);
 
@@ -109,7 +132,12 @@ export default class Player {
 	}
 	draw(context) {
 		// Hitbox
-		context.strokeRect(this.x, this.y, this.width, this.height);
+		context.strokeRect(
+			this.hitboxX,
+			this.hitboxY,
+			this.hitboxWidth,
+			this.hitboxHeight
+		);
 		context.drawImage(
 			this.image, // Load image
 			this.frameX * this.width, // X position on png file
@@ -136,17 +164,21 @@ export default class Player {
 		// Loop through all enemies and check for collision using algorithm
 		this.game.enemies.forEach((enemy) => {
 			if (
-				enemy.x < this.x + this.width &&
-				enemy.x + enemy.width > this.x &&
-				enemy.y < this.y + this.height &&
-				enemy.y + enemy.height > this.y
+				enemy.x < this.hitboxX + this.hitboxWidth &&
+				enemy.x + enemy.width > this.hitboxX &&
+				enemy.y < this.hitboxY + this.hitboxHeight &&
+				enemy.y + enemy.height > this.hitboxY
 			) {
 				enemy.markedForDeletion = true;
 				// Insert collision animation here
 				// Player in attack animation increase points
 				if (
 					this.currentState === this.states[8] ||
-					this.currentState === this.states[9]
+					this.currentState === this.states[9] ||
+					this.currentState === this.states[12] ||
+					this.currentState === this.states[13] ||
+					this.currentState === this.states[14] ||
+					this.currentState === this.states[15]
 				) {
 					this.game.score++;
 					if (this.game.score % 10 === 0) {

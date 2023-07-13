@@ -14,6 +14,10 @@ const states = {
 	ATTACK_LEFT: 9,
 	HURT_RIGHT: 10,
 	HURT_LEFT: 11,
+	ATTACK_RIGHT_2: 12,
+	ATTACK_RIGHT_3: 13,
+	ATTACK_LEFT_2: 14,
+	ATTACK_LEFT_3: 15,
 };
 
 class State {
@@ -31,12 +35,12 @@ export class IdleRight extends State {
 	}
 	enter() {
 		this.game.player.leftSide = false;
-		this.game.player.width = 38; // Sprite width
-		this.game.player.height = 48; // Sprite height
-		this.game.player.image = playerIdle; // Change sprite sheets
+		this.game.player.width = 160; // Sprite width
+		this.game.player.height = 111; // Sprite height
+		this.game.player.image = playerIdle2; // Change sprite sheets
 		this.game.player.speed = 0;
 		this.game.player.frameX = 0;
-		this.game.player.maxFrame = 3; // 4 frames starting from count 0
+		this.game.player.maxFrame = 7; // 4 frames starting from count 0
 	}
 	// Possible change states from this currently
 	handleInput(input) {
@@ -58,13 +62,13 @@ export class IdleLeft extends State {
 	}
 	enter() {
 		this.game.player.leftSide = true;
-		this.game.player.width = 38;
-		this.game.player.height = 48;
-		this.game.player.image = playerIdleLeft;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerIdle2Left;
 		this.game.player.speed = 0;
-		this.game.player.frameX = 3;
+		this.game.player.frameX = 7;
 		this.game.player.maxFrame = 0;
-		this.game.player.frameXLeft = 3;
+		this.game.player.frameXLeft = 7;
 	}
 	handleInput(input) {
 		if (input === "PRESS right") {
@@ -85,12 +89,12 @@ export class RunningRight extends State {
 	}
 	enter() {
 		this.game.player.leftSide = false;
-		this.game.player.width = 66;
-		this.game.player.height = 48;
-		this.game.player.image = playerRun;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerRun2;
 		this.game.player.speed = this.game.player.maxSpeed;
 		this.game.player.frameX = 0;
-		this.game.player.maxFrame = 10;
+		this.game.player.maxFrame = 7;
 	}
 	handleInput(input) {
 		if (input === "RELEASE right") {
@@ -99,6 +103,8 @@ export class RunningRight extends State {
 			this.game.player.setState(states.RUNNING_LEFT, 2);
 		} else if (input === "PRESS up") {
 			this.game.player.setState(states.JUMP_RIGHT, 2);
+		} else if (input === "PRESS space") {
+			this.game.player.setState(states.ATTACK_RIGHT, 2);
 		}
 	}
 }
@@ -109,13 +115,13 @@ export class RunningLeft extends State {
 	}
 	enter() {
 		this.game.player.leftSide = true;
-		this.game.player.width = 66;
-		this.game.player.height = 48;
-		this.game.player.image = playerRunLeft;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerRun2Left;
 		this.game.player.speed = -this.game.player.maxSpeed;
-		this.game.player.frameX = 10;
+		this.game.player.frameX = 7;
 		this.game.player.maxFrame = 0;
-		this.game.player.frameXLeft = 10;
+		this.game.player.frameXLeft = 7;
 	}
 	handleInput(input) {
 		if (input === "RELEASE left") {
@@ -124,6 +130,8 @@ export class RunningLeft extends State {
 			this.game.player.setState(states.RUNNING_RIGHT, 2);
 		} else if (input === "PRESS up") {
 			this.game.player.setState(states.JUMP_LEFT, 2);
+		} else if (input === "PRESS space") {
+			this.game.player.setState(states.ATTACK_LEFT, 2);
 		}
 	}
 }
@@ -134,11 +142,11 @@ export class JumpRight extends State {
 	}
 	enter() {
 		this.game.player.leftSide = false;
-		this.game.player.width = 61;
-		this.game.player.height = 77;
-		this.game.player.image = playerJump;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerJump2;
 		this.game.player.frameX = 0;
-		this.game.player.maxFrame = 5;
+		this.game.player.maxFrame = 1;
 		if (this.game.player.onGround()) {
 			this.game.player.vy -= 30;
 		}
@@ -151,7 +159,7 @@ export class JumpRight extends State {
 		} else if (input === "PRESS left") {
 			this.game.player.setState(states.JUMP_LEFT, 2);
 		} else if (input === "PRESS space") {
-			this.game.player.setState(states.ATTACK_RIGHT, 2);
+			this.game.player.setState(states.ATTACK_RIGHT_3, 2);
 		}
 	}
 }
@@ -162,12 +170,12 @@ export class JumpLeft extends State {
 	}
 	enter() {
 		this.game.player.leftSide = true;
-		this.game.player.width = 61;
-		this.game.player.height = 77;
-		this.game.player.image = playerJumpLeft;
-		this.game.player.frameX = 4;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerJump2Left;
+		this.game.player.frameX = 1;
 		this.game.player.maxFrame = 0;
-		this.game.player.frameXLeft = 4;
+		this.game.player.frameXLeft = 1;
 		if (this.game.player.onGround()) {
 			this.game.player.vy -= 30;
 		}
@@ -179,7 +187,7 @@ export class JumpLeft extends State {
 		} else if (input === "PRESS right") {
 			this.game.player.setState(states.JUMP_RIGHT, 2);
 		} else if (input === "PRESS space") {
-			this.game.player.setState(states.ATTACK_LEFT, 2);
+			this.game.player.setState(states.ATTACK_LEFT_3, 2);
 		}
 	}
 }
@@ -189,12 +197,16 @@ export class FallingRight extends State {
 		this.game = game;
 	}
 	enter() {
+		let newImage = new Image();
+		newImage.src = "././assets/Medieval King Pack 2/Sprites/Fall.png";
 		this.game.player.leftSide = false;
-		this.game.player.width = 61;
-		this.game.player.height = 77;
-		this.game.player.image = playerJump;
-		this.game.player.frameX = 3;
-		this.game.player.maxFrame = 4;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		// this.game.player.image = playerFall2;
+		// this.game.player.image = playerJump2;
+		this.game.player.image = newImage;
+		this.game.player.frameX = 0;
+		this.game.player.maxFrame = 1;
 	}
 	handleInput(input) {
 		if (this.game.player.onGround() && input === "PRESS right") {
@@ -204,7 +216,7 @@ export class FallingRight extends State {
 		} else if (input === "PRESS left") {
 			this.game.player.setState(states.JUMP_LEFT, 2);
 		} else if (input === "PRESS space") {
-			this.game.player.setState(states.ATTACK_RIGHT, 2);
+			this.game.player.setState(states.ATTACK_RIGHT_3, 2);
 		}
 	}
 }
@@ -214,13 +226,16 @@ export class FallingLeft extends State {
 		this.game = game;
 	}
 	enter() {
+		let newImage = new Image();
+		newImage.src = "././assets/Medieval King Pack 2/Sprites/Left/Fall.png";
 		this.game.player.leftSide = true;
-		this.game.player.width = 61;
-		this.game.player.height = 77;
-		this.game.player.image = playerJumpLeft;
-		this.game.player.frameX = 0;
-		this.game.player.frameXLeft = 0;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		// this.game.player.image = playerFall2Left;
+		this.game.player.image = newImage;
+		this.game.player.frameX = 1;
 		this.game.player.maxFrame = 0;
+		this.game.player.frameXLeft = 1;
 	}
 	handleInput(input) {
 		if (this.game.player.onGround() && input === "PRESS left") {
@@ -230,7 +245,7 @@ export class FallingLeft extends State {
 		} else if (input === "PRESS right") {
 			this.game.player.setState(states.JUMP_RIGHT, 2);
 		} else if (input === "PRESS space") {
-			this.game.player.setState(states.ATTACK_LEFT, 2);
+			this.game.player.setState(states.ATTACK_LEFT_3, 2);
 		}
 	}
 }
@@ -241,12 +256,87 @@ export class AttackRight extends State {
 	}
 	enter() {
 		this.game.player.leftSide = false;
-		this.game.player.width = 96;
-		this.game.player.height = 48;
-		this.game.player.image = playerAttack;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerAttack2;
 		this.game.player.frameX = 0;
-		this.game.player.maxFrame = 6;
-		this.game.player.speed = this.game.player.maxSpeed * 0.2;
+		this.game.player.maxFrame = 3;
+		this.game.player.speed = this.game.player.maxSpeed * 0.3;
+		// HITBOX
+		this.game.player.hitboxWidth = 150;
+		this.game.player.hitboxHeight = 65;
+		this.game.player.hitboxX =
+			this.game.player.x +
+			this.game.player.width / 2 -
+			this.game.player.hitboxWidth / 2.5;
+		this.game.player.hitboxY =
+			this.game.player.y +
+			this.game.player.height / 2 -
+			this.game.player.hitboxHeight / 6;
+	}
+	handleInput(input) {
+		if (this.game.player.frameX === this.game.player.maxFrame) {
+			if (input === "PRESS space") {
+				this.game.player.setState(states.ATTACK_RIGHT_2, 2);
+			} else {
+				this.game.player.setState(states.IDLE_RIGHT, 2);
+			}
+		}
+	}
+}
+export class AttackRight2 extends State {
+	constructor(game) {
+		super("ATTACK_RIGHT_2");
+		this.game = game;
+	}
+	enter() {
+		this.game.player.leftSide = false;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerAttack2_2nd;
+		this.game.player.frameX = 0;
+		this.game.player.maxFrame = 3;
+		this.game.player.speed = this.game.player.maxSpeed * 0.3;
+		// HITBOX
+		this.game.player.hitboxWidth = 150;
+		this.game.player.hitboxHeight = 65;
+		this.game.player.hitboxX =
+			this.game.player.x +
+			this.game.player.width / 2 -
+			this.game.player.hitboxWidth / 2.5;
+		this.game.player.hitboxY =
+			this.game.player.y +
+			this.game.player.height / 2 -
+			this.game.player.hitboxHeight / 6;
+	}
+	handleInput(input) {
+		if (this.game.player.frameX === this.game.player.maxFrame) {
+			if (input === "PRESS space") {
+				this.game.player.setState(states.ATTACK_RIGHT_3, 2);
+			} else {
+				this.game.player.setState(states.IDLE_RIGHT, 2);
+			}
+		}
+	}
+}
+export class AttackRight3 extends State {
+	constructor(game) {
+		super("ATTACK_RIGHT_3");
+		this.game = game;
+	}
+	enter() {
+		this.game.player.leftSide = false;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerAttack2_3rd;
+		this.game.player.frameX = 0;
+		this.game.player.maxFrame = 3;
+		this.game.player.speed = this.game.player.maxSpeed * 0.3;
+		// HITBOX
+		this.game.player.hitboxWidth = this.game.player.width + 20;
+		this.game.player.hitboxHeight = this.game.player.height + 30;
+		this.game.player.hitboxX = this.game.player.x + 20;
+		this.game.player.hitboxY = this.game.player.y - 30;
 	}
 	handleInput(input) {
 		if (this.game.player.frameX === this.game.player.maxFrame) {
@@ -261,13 +351,90 @@ export class AttackLeft extends State {
 	}
 	enter() {
 		this.game.player.leftSide = true;
-		this.game.player.width = 96;
-		this.game.player.height = 48;
-		this.game.player.image = playerAttackLeft;
-		this.game.player.frameX = 5;
-		this.game.player.maxFrame = -1;
-		this.game.player.frameXLeft = 5;
-		this.game.player.speed = -this.game.player.maxSpeed * 0.2;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerAttack2Left;
+		this.game.player.frameX = 3;
+		this.game.player.maxFrame = 0;
+		this.game.player.frameXLeft = 3;
+		this.game.player.speed = -this.game.player.maxSpeed * 0.3;
+		// HITBOX
+		this.game.player.hitboxWidth = -150;
+		this.game.player.hitboxHeight = 65;
+		this.game.player.hitboxX =
+			this.game.player.x +
+			this.game.player.width / 2 -
+			this.game.player.hitboxWidth / 2.5;
+		this.game.player.hitboxY =
+			this.game.player.y +
+			this.game.player.height / 2 -
+			this.game.player.hitboxHeight / 6;
+	}
+	handleInput(input) {
+		if (this.game.player.frameX === this.game.player.maxFrame) {
+			if (input === "PRESS space") {
+				this.game.player.setState(states.ATTACK_LEFT_2, 2);
+			} else {
+				this.game.player.setState(states.IDLE_LEFT, 2);
+			}
+		}
+	}
+}
+export class AttackLeft2 extends State {
+	constructor(game) {
+		super("ATTACK_LEFT_2");
+		this.game = game;
+	}
+	enter() {
+		this.game.player.leftSide = true;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerAttack2Left_2nd;
+		this.game.player.frameX = 3;
+		this.game.player.maxFrame = 0;
+		this.game.player.frameXLeft = 3;
+		this.game.player.speed = -this.game.player.maxSpeed * 0.3;
+		// HITBOX
+		this.game.player.hitboxWidth = -150;
+		this.game.player.hitboxHeight = 65;
+		this.game.player.hitboxX =
+			this.game.player.x +
+			this.game.player.width / 2 -
+			this.game.player.hitboxWidth / 2.5;
+		this.game.player.hitboxY =
+			this.game.player.y +
+			this.game.player.height / 2 -
+			this.game.player.hitboxHeight / 6;
+	}
+	handleInput(input) {
+		if (this.game.player.frameX === this.game.player.maxFrame) {
+			if (input === "PRESS space") {
+				this.game.player.setState(states.ATTACK_LEFT_3, 2);
+			} else {
+				this.game.player.setState(states.IDLE_LEFT, 2);
+			}
+		}
+	}
+}
+export class AttackLeft3 extends State {
+	constructor(game) {
+		super("ATTACK_LEFT_3");
+		this.game = game;
+	}
+	enter() {
+		this.game.player.leftSide = true;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerAttack2Left_3rd;
+		this.game.player.frameX = 3;
+		this.game.player.maxFrame = 0;
+		this.game.player.frameXLeft = 3;
+		this.game.player.speed = -this.game.player.maxSpeed * 0.3;
+		// HITBOX
+		this.game.player.hitboxWidth = this.game.player.width + 20;
+		this.game.player.hitboxHeight = this.game.player.height + 30;
+		this.game.player.hitboxX = this.game.player.x - 30;
+		this.game.player.hitboxY = this.game.player.y - 30;
 	}
 	handleInput(input) {
 		if (this.game.player.frameX === this.game.player.maxFrame) {
@@ -282,11 +449,11 @@ export class HurtRight extends State {
 	}
 	enter() {
 		this.game.player.leftSide = false;
-		this.game.player.width = 48;
-		this.game.player.height = 48;
-		this.game.player.image = playerHurt;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerHurt2;
 		this.game.player.frameX = 0;
-		this.game.player.maxFrame = 3;
+		this.game.player.maxFrame = 4;
 		this.game.player.frameXLeft = 0;
 		this.game.player.speed = 0;
 	}
@@ -303,12 +470,12 @@ export class HurtLeft extends State {
 	}
 	enter() {
 		this.game.player.leftSide = true;
-		this.game.player.width = 48;
-		this.game.player.height = 48;
-		this.game.player.image = playerHurtLeft;
-		this.game.player.frameX = 2;
+		this.game.player.width = 160;
+		this.game.player.height = 111;
+		this.game.player.image = playerHurt2Left;
+		this.game.player.frameX = 4;
 		this.game.player.maxFrame = -1;
-		this.game.player.frameXLeft = 3;
+		this.game.player.frameXLeft = 4;
 		this.game.player.speed = 0;
 	}
 	handleInput(input) {

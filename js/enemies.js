@@ -76,7 +76,7 @@ export class Ghost extends Enemy {
 		this.game = game;
 		this.width = 64;
 		this.height = 80;
-		this.x = Math.random() * this.game.width;
+		this.x = Math.random() * this.game.width - this.width / 2;
 		this.y = Math.random() * this.game.height * 0.1;
 		this.image = enemyGhost;
 		this.speedX = 0;

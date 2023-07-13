@@ -7,10 +7,10 @@ import UI from "./ui.js";
 window.addEventListener("load", () => {
 	const canvas = document.getElementById("canvas");
 	const ctx = canvas.getContext("2d");
-	// canvas.width = 960;
-	// canvas.height = 540;
-	canvas.width = 800;
-	canvas.height = 400;
+	canvas.width = 960;
+	canvas.height = 540;
+	// canvas.width = 800;
+	// canvas.height = 400;
 
 	// Main game class
 	// Game object will be passed to other files so they have access to properties via keyword "this"

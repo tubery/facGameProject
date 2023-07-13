@@ -13,6 +13,7 @@
 	width: 960px;
 	height: 540px;
 	border: 1px solid black;
+	background-color: grey;
 }
 
 /* Hide all images since we are using this tag to load images faster */
