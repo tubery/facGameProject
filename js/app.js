@@ -1,5 +1,5 @@
-// import InputHandler from "./input.js";
 import { FireSkull, Ghost } from "./enemies.js";
+import { Nightmare } from "./enemiesLeft.js";
 import InputHandler from "./input-2.js";
 import Player from "./player.js";
 import UI from "./ui.js";
@@ -9,8 +9,6 @@ window.addEventListener("load", () => {
 	const ctx = canvas.getContext("2d");
 	canvas.width = 960;
 	canvas.height = 540;
-	// canvas.width = 800;
-	// canvas.height = 400;
 
 	// Main game class
 	// Game object will be passed to other files so they have access to properties via keyword "this"
@@ -24,6 +22,7 @@ window.addEventListener("load", () => {
 			this.maxSpeed = 4;
 			// Background
 			this.background = document.getElementById("background");
+			this.groundMargin = 100;
 			// Player
 			this.player = new Player(this);
 			this.input = new InputHandler(this);
@@ -36,7 +35,7 @@ window.addEventListener("load", () => {
 			// UI
 			this.ui = new UI(this);
 			this.score = 0;
-			this.fontColor = "black";
+			this.fontColor = "white";
 			this.lives = 3;
 			this.floatingMessages = [];
 			this.difficulty = 1;
@@ -44,13 +43,22 @@ window.addEventListener("load", () => {
 			this.collisions = [];
 			// GameOver
 			this.gameOver = false;
-			this.winningScore = 30;
+			this.winningScore = 40;
 		}
 		// Updating drawn items
 		update(deltaTime) {
-			if (this.score === 10) {
+			// Game difficulty changes
+			if (this.score >= 10 && this.score < 20) {
+				this.speed = 1;
 				this.difficulty = 2;
+			} else if (this.score >= 20 && this.score < 30) {
+				this.speed = 2;
+				this.difficulty = 3;
+			} else if (this.score >= 30 && this.score < 40) {
+				this.speed = 3;
+				this.difficulty = 4;
 			} else if (this.score < 10) {
+				this.speed = 0;
 				this.difficulty = 1;
 			}
 			// Enemeis
@@ -85,6 +93,9 @@ window.addEventListener("load", () => {
 			if (this.score > 10) {
 				this.enemies.push(new Ghost(this));
 			}
+			if (this.score > 20) {
+				this.enemies.push(new Nightmare(this));
+			}
 		}
 		restart() {
 			this.player = new Player(this);
@@ -106,6 +117,7 @@ window.addEventListener("load", () => {
 		lastTime = timeStamp;
 		// Clear frame on every draw
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.drawImage(game.background, 0, 0, canvas.width, canvas.height);
 		// Draw onto canvas
 		game.update(deltaTime);
 		game.draw(ctx);

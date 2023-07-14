@@ -16,7 +16,7 @@ import {
 	JumpRight,
 	RunningLeft,
 	RunningRight,
-} from "./playerStatesTemp.js";
+} from "./playerStates.js";
 
 export default class Player {
 	constructor(game) {
@@ -26,7 +26,7 @@ export default class Player {
 		this.height = 111;
 		// Player position
 		this.x = this.game.width / 2 - this.width;
-		this.y = this.game.height - this.height;
+		this.y = this.game.height - this.height - this.game.groundMargin;
 		// Weight / Gravity
 		this.vy = 0; // vy stands for velocity y axis
 		this.weight = 2.5;
@@ -144,12 +144,12 @@ export default class Player {
 		);
 	}
 	onGround() {
-		return this.y >= this.game.height - this.height;
+		return (
+			this.y >= this.game.height - this.height - this.game.groundMargin
+		);
 	}
-	// Game speed may be redundant as back is not scrolling parallax
-	setState(state, speed) {
+	setState(state) {
 		this.currentState = this.states[state];
-		this.game.speed = this.game.maxSpeed * speed;
 		this.currentState.enter();
 	}
 	// Collision
@@ -188,7 +188,7 @@ export default class Player {
 					}
 				} else {
 					// Player gets hit reduce points
-					this.setState(10, 0);
+					this.setState(10);
 					this.game.lives--;
 					this.game.score -= 3;
 					if (this.game.lives <= 0) {

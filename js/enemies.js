@@ -9,7 +9,6 @@ class Enemy {
 		this.markedForDeletion = false;
 	}
 	update(deltaTime) {
-		// this.x -= this.speedX + this.game.speed;
 		this.x -= this.speedX;
 		this.y -= this.speedY;
 		// Sprite animation
@@ -30,7 +29,7 @@ class Enemy {
 	}
 	draw(context) {
 		// Hitboxes
-		context.strokeRect(this.x, this.y, this.width, this.height);
+		// context.strokeRect(this.x, this.y, this.width, this.height);
 		// Draw enemy
 		context.drawImage(
 			this.image,
@@ -53,8 +52,8 @@ export class FireSkull extends Enemy {
 		this.width = 96;
 		this.height = 112;
 		this.x = this.game.width;
-		this.y = this.game.height * 0.6;
-		this.speedX = Math.random() * 3 + 1;
+		this.y = this.game.height * 0.45;
+		this.speedX = Math.random() * 3 + 1 + this.game.speed;
 		this.speedY = 0;
 		this.maxFrame = 7;
 		this.image = enemyFireSkull;

@@ -3,19 +3,23 @@ export default class UI {
 		this.game = game;
 		this.fontSize = 30;
 		this.fontFamily = "Georgia";
-		this.heartImage = heart;
 	}
 	draw(context) {
+		// Shadow effect on text for readability
+		context.fillStyle = "black";
+		context.fillText(`Score: ${this.game.score}`, 22, 52);
+		context.fillText(`Lives: ${this.game.lives}`, 22, 87);
+		context.fillText(`Difficulty: ${this.game.difficulty}`, 22, 122);
+		context.fillText(`Controls: ArrowKeys and SpaceBar`, 472, 52);
+
 		context.font = this.fontSize + "px " + this.fontFamily;
 		context.textAlign = "left";
 		context.fillStyle = this.game.fontColor;
 		// Text
 		context.fillText(`Score: ${this.game.score}`, 20, 50);
+		context.fillText(`Lives: ${this.game.lives}`, 20, 85);
 		context.fillText(`Difficulty: ${this.game.difficulty}`, 20, 120);
-		// Hearts
-		for (let i = 0; i < this.game.lives; i++) {
-			context.drawImage(this.heartImage, 30 * i + 20, 65, 25, 25);
-		}
+		context.fillText(`Controls: ArrowKeys and SpaceBar`, 470, 50);
 
 		// Game over
 		if (this.game.gameOver) {
