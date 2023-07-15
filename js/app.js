@@ -43,10 +43,13 @@ window.addEventListener("load", () => {
 			this.collisions = [];
 			// GameOver
 			this.gameOver = false;
-			this.winningScore = 40;
+			this.winningScore = 60;
 		}
 		// Updating drawn items
 		update(deltaTime) {
+			if (this.score === game.winningScore) {
+				this.gameOver = true;
+			}
 			// Game difficulty changes
 			if (this.score >= 10 && this.score < 20) {
 				this.speed = 1;
@@ -57,6 +60,12 @@ window.addEventListener("load", () => {
 			} else if (this.score >= 30 && this.score < 40) {
 				this.speed = 3;
 				this.difficulty = 4;
+			} else if (this.score >= 40 && this.score < 50) {
+				this.speed = 4;
+				this.difficulty = 5;
+			} else if (this.score >= 50 && this.score < 60) {
+				this.speed = 5;
+				this.difficulty = 6;
 			} else if (this.score < 10) {
 				this.speed = 0;
 				this.difficulty = 1;
