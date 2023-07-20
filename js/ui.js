@@ -7,10 +7,10 @@ export default class UI {
 	draw(context) {
 		// Shadow effect on text for readability
 		context.fillStyle = "black";
-		context.fillText(`Score: ${this.game.score}`, 22, 52);
-		context.fillText(`Lives: ${this.game.lives}`, 22, 87);
-		context.fillText(`Difficulty: ${this.game.difficulty}`, 22, 122);
-		context.fillText(`Controls: ArrowKeys and SpaceBar`, 472, 52);
+		context.fillText(`Score: ${this.game.score}`, 23, 53);
+		context.fillText(`Lives: ${this.game.lives}`, 23, 88);
+		context.fillText(`Difficulty: ${this.game.difficulty}`, 23, 123);
+		context.fillText(`Controls: ArrowKeys and SpaceBar`, 473, 53);
 
 		context.font = this.fontSize + "px " + this.fontFamily;
 		context.textAlign = "left";
